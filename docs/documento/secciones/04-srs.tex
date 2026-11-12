@@ -1525,6 +1525,113 @@ Casos de prueba & CPA-31 \\
 
 \figura{figuras/story-map.png}{width=\linewidth}{4.1}{Story map con el corte del release v0.1.0: actividades del flujo de atención en columnas, historias ordenadas por prioridad y, bajo la línea, las que pasan a la Fase 2. Elaboración propia}{docs/04-requisitos/story-map.py}
 
+\subsection{4.6 Requisitos no
+funcionales}\label{requisitos-no-funcionales}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.0962}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2136}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2735}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2137}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2031}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Característica ISO/IEC 25010:2023}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Requisito}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Métrica y umbral}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Cómo se verificará}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+RNF-01 & Flexibilidad (instalabilidad y adaptabilidad) & El portal del
+cliente deberá ser una PWA responsiva que funcione en navegadores
+móviles iOS y Android sin instalar software ni conceder permisos
+especiales. & Funciona sin errores bloqueantes en las 2 últimas
+versiones de Safari (iOS) y Chrome (Android); 0 permisos solicitados al
+cliente; sin desplazamiento horizontal en anchos de 360 a 430 px. &
+Pruebas manuales en 2 móviles reales (iOS y Android) con una lista de
+verificación de las pantallas del cliente y revisión con las
+herramientas de desarrollo del navegador. \\
+RNF-02 & Capacidad de interacción & La interfaz de la tableta del jefe
+de Mecánicos deberá tener botones grandes, alto contraste y controles
+táctiles adaptados al uso con manos sucias y en ambiente ruidoso. &
+Botones de al menos 48 × 48 px con separación mínima de 8 px; contraste
+de texto de al menos 7:1; al menos 95 \% de aciertos en 20 toques con
+guantes de trabajo. & Auditoría con Lighthouse o axe DevTools
+(gratuitos), medición del contraste con un verificador y prueba en la
+tableta real con guantes. \\
+RNF-03 & Capacidad de interacción & La interfaz de la tableta deberá
+ofrecer flujos de pocos pasos para las operaciones frecuentes del
+taller. & Asignar bahía, actualizar el estado de una orden y sellar un
+trabajo en máximo 4 toques y 30 s cada una. & Prueba de usabilidad
+cronometrada con al menos 3 usuarios (o compañeros que simulen el rol),
+repitiendo cada operación 3 veces. \\
+RNF-04 & Seguridad (no repudio e integridad) & Toda autorización de
+presupuesto o de sobrecosto mayor al 10 \% deberá registrar marca de
+tiempo y metadatos inalterables, incluida la dirección IP, para evitar
+disputas con el cliente. & 100 \% de las autorizaciones guardan fecha y
+hora UTC, IP, identificador de orden y huella SHA-256 del documento; 100
+\% de los intentos de alterar un registro se detectan al verificar la
+huella. & Prueba con 20 autorizaciones, revisión de los registros
+guardados e intento de modificar directamente la base de datos para
+confirmar que la verificación lo detecta. \\
+RNF-05 & Seguridad (confidencialidad y cumplimiento legal) & El manejo
+de datos personales deberá apegarse a la Ley Federal de Protección de
+Datos Personales en Posesión de los Particulares y usar solo datos
+ficticios en las pruebas. & 100 \% de las conexiones con HTTPS (TLS 1.2
+o superior); datos personales sensibles cifrados en reposo; aviso de
+privacidad visible en el 100 \% de los formularios que capturan datos; 0
+registros reales en el ambiente de pruebas. & Análisis con testssl.sh o
+SSL Labs, lista de verificación de la ley revisada por el equipo y
+revisión de los datos de prueba antes de cada entrega. \\
+RNF-06 & Eficiencia de desempeño & El registro de recepción se deberá
+guardar de forma local con rapidez, aun sin conexión. & Guardar un
+registro con 5 fotografías en máximo 2 s (percentil 95) en la tableta o
+laptop del taller. & 20 repeticiones cronometradas con la herramienta de
+rendimiento del navegador, calculando el percentil 95. \\
+RNF-07 & Mantenibilidad (modificabilidad) & El desarrollo deberá usar
+únicamente herramientas de código abierto, frameworks de uso libre (como
+FastAPI y Python) y planes educativos. & 100 \% de las dependencias con
+licencia de código abierto o plan educativo vigente; costo de
+licenciamiento de \$0 en esta fase. & Inventario de dependencias con
+herramientas de revisión de licencias (por ejemplo, pip-licenses) y
+registro de los planes educativos usados. \\
+RNF-08 & Fiabilidad (tolerancia a fallos) & El personal interno deberá
+poder operar sin internet o sin energía eléctrica, con equipos en
+batería, bajo una arquitectura local con sincronización diferida. & Las
+7 operaciones definidas (registro de entrada, checklist, fotografías,
+diagnósticos, asignación de bahías, consulta de proveedores y
+autorizaciones gerenciales) funcionan al 100 \% durante al menos 4 h sin
+conexión; 0 datos perdidos. & Casos de prueba de las 7 operaciones con
+la red desconectada y un equipo con batería, comparando los registros al
+terminar. \\
+RNF-09 & Fiabilidad (recuperabilidad) & Al restablecerse la conexión, el
+sistema deberá sincronizar automáticamente datos, archivos multimedia y
+registros de auditoría con la base de datos central, sin duplicados. &
+100 \% de los registros sincronizados, 0 duplicados y 0 pérdidas; 200
+registros con 50 fotografías en máximo 5 min. & Crear 200 registros sin
+conexión, reconectar y comparar conteos y huellas con la base central;
+repetir 3 veces e interrumpir la conexión a mitad de una
+sincronización. \\
+RNF-10 & Fiabilidad (tolerancia a fallos del cliente) & Ante una falla
+de conectividad durante la consulta de estatus o la autorización 2FA, la
+interfaz del cliente deberá informar el estado y reintentar
+automáticamente. & Mensaje de estado en máximo 3 s; reintento automático
+cada 30 s o menos hasta completar; 0 autorizaciones duplicadas o
+perdidas. & Cortar el servidor durante la consulta y durante el envío
+del código, cronometrar el mensaje y revisar la base de datos tras
+restablecer el servicio. \\
+\end{longtable}
+}
+
 \subsection{4.7 Reglas de negocio y requisitos de
 dominio}\label{reglas-de-negocio-y-requisitos-de-dominio}
 
@@ -1748,3 +1855,4 @@ resguardan con el mismo cuidado que los datos personales del sistema (4.8).
 campo \texttt{folio\_provisional}; diseñar e imprimir los formatos de la
 Bitácora; validar con el cliente el umbral de 4 horas y el plazo de 24
 horas.}
+
