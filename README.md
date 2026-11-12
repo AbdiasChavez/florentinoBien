@@ -8,13 +8,16 @@ cotización con autorización del cliente por código de verificación, refaccio
 
 ## Equipo
 
-| Integrante | Rol | Rama |
-|---|---|---|
-| Ángel Yael Avendaño Guzmán | Product Owner | `rol/product-owner` |
-| Abdías Daniel Chávez Cruz | Scrum Master / Tech Lead | `rol/scrum-master` |
-| Dulce María Estudillo Rosado | QA Lead | `rol/qa-lead` |
-| Isis Alhelí González Maldonado | Developer | `rol/developers` |
-| Isis Yamilet Meléndez Hernández | Developer | `rol/developers` |
+| Integrante | Rol |
+|---|---|
+| Ángel Yael Avendaño Guzmán | Product Owner |
+| Abdías Daniel Chávez Cruz | Scrum Master / Tech Lead |
+| Dulce María Estudillo Rosado | QA Lead |
+| Isis Alhelí González Maldonado | Developer |
+| Isis Yamilet Meléndez Hernández | Developer |
+
+Cada historia o tarea se trabaja en su propia rama `tipo/número-descripción` (GitHub Flow); ver
+[`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 ## Entregas del Documento de Ingeniería
 
