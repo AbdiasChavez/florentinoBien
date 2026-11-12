@@ -243,3 +243,91 @@ dependencias}\label{restricciones-supuestos-y-dependencias}
   fuera de stock depende del directorio de proveedores locales e
   historial de compras del almacén.
 \end{itemize}
+
+\subsection{4.4 Requisitos funcionales}\label{requisitos-funcionales}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.0962}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.4444}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1174}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1497}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1923}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Requisito funcional}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Módulo}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Prioridad (MoSCoW)}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Historias relacionadas}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+RF-01 & El sistema deberá permitir autenticar mediante credenciales
+seguras al personal del taller según su rol (Gerente, Recepcionista,
+Jefe de Mecánicos y Encargado de Almacén). & M1 -- Autenticación y
+Seguridad & Must & HU-27 \\
+RF-02.1 & El sistema deberá permitir al cliente consultar el estado de
+su vehículo y autorizar cotizaciones mediante un enlace web seguro
+enviado por correo electrónico o por SMS (RF-02.3), sin instalar
+aplicaciones. & M1 -- Autenticación y Seguridad & Must & HU-02, HU-28 \\
+RF-02.2 & El sistema deberá de expirar el enlace del cliente de manera
+automática una vez que el vehículo sea entregado y saldado. & M1 --
+Autenticación y Seguridad & Should & HU-02, HU-23 \\
+RF-02.3 & El sistema deberá de permitir enviar el enlace del cliente
+también por SMS. & M1 -- Autenticación y Seguridad & Could & HU-02 \\
+RF-03.1 & El sistema deberá registrar, buscar y actualizar la
+información de clientes y vehículos (placas, marca, modelo, año y VIN
+(opcional)). & M3 -- Recepción E Historial Inicial & Must & HU-05,
+HU-06 \\
+RF-03.2 & El sistema deberá mantener el historial de servicios de cada
+vehículo, con fotografías de recepción, diagnósticos técnicos y
+garantías aplicables (30 días en mano de obra). & M7 -- Portal del
+Cliente, Cobro y Gerencia & Should & HU-23, HU-24 \\
+RF-04 & El sistema deberá registrar en la recepción el kilometraje, el
+nivel de combustible y un checklist de carrocería, y exigir fotografías
+digitales del estado inicial de la unidad. & M3 -- Recepción E Historial
+Inicial & Must & HU-01, HU-25, HU-26 \\
+RF-05 & El sistema deberá permitir abrir órdenes de servicio asociadas a
+una de las 4 bahías y a un mecánico responsable, controlando los estados
+operativos del taller. & M5 -- Taller, Bahías y Expediente Técnico &
+Must & HU-07, HU-08, HU-09, HU-11 \\
+RF-06 & El sistema deberá generar cotizaciones desglosadas (mano de obra
+y refacciones/insumos) con vigencia de 5 días naturales y requerir firma
+digital validada con un código enviado al correo del cliente, de forma
+remota o presencial. & M4 Cotización y Contratos 2FA & Must & HU-02,
+HU-12, HU-13, HU-14, HU-15 \\
+RF-07 & El sistema deberá bloquear el avance del trabajo y exigir una
+nueva autorización con verificación cuando los trabajos adicionales
+incrementen el monto inicial en más de 10 \%. & M4 Cotización y
+Contratos 2FA & Must & HU-16 \\
+RF-08.1 & El sistema deberá permitir al jefe de mecánicos solicitar al
+almacén las piezas que requieran los mecánicos, vinculadas a una orden
+de servicio. & M6 -- Almacén y Refacciones & Should & HU-10, HU-19 \\
+RF-08.2 & El sistema deberá permitir al encargado de almacén mantener un
+directorio de proveedores locales (teléfonos o correos) y registrar
+costos y fechas de llegada de las piezas. & M6 -- Almacén y Refacciones
+& Should & HU-17, HU-18 \\
+RF-08.3 & El sistema deberá de emitir un ticket e historial de compras
+asociado a cada orden de servicio. & M6 -- Almacén y Refacciones & Could
+& HU-18 \\
+RF-09 & El sistema deberá ofrecer una agenda digital por día y bahía,
+donde las citas solicitadas en línea quedan ``Pendientes'' hasta que la
+recepcionista verifique disponibilidad y las confirme manualmente & M2
+-- Citas y Solicitudes & Should & HU-03, HU-04, HU-06 \\
+RF-10 & El sistema deberá impedir la entrega física del vehículo con
+saldo pendiente, a menos que el gerente autorice la entrega a crédito
+para vehículos de flotillas empresariales previamente registradas. & M7
+-- Portal del Cliente, Cobro y Gerencia & Must & HU-21, HU-22, HU-23 \\
+RF-11 & El sistema deberá ofrecer al gerente un panel con las órdenes
+abiertas y su estado, la ocupación de las 4 bahías, los tiempos de
+estancia y los ingresos acumulados. & M7 -- Portal del Cliente, Cobro y
+Gerencia & Should & HU-29 \\
+\end{longtable}
+}
