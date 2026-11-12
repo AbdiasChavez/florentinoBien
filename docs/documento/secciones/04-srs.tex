@@ -1,0 +1,333 @@
+\section{4. Especificación de requisitos de software
+(SRS)}\label{especificaciuxf3n-de-requisitos-de-software-srs}
+
+Estructura adaptada de ISO/IEC/IEEE 29148:2018. Cada requisito tiene un
+identificador único que se utiliza para la trazabilidad.
+
+\subsection{4.1 Propósito, alcance y audiencia del
+SRS}\label{propuxf3sito-alcance-y-audiencia-del-srs}
+
+\textbf{Propósito:} este SRS describe qué debe hacer el Sistema de
+Órdenes de Servicio y Citas y con qué calidad, para que el cliente lo
+valide y lo firme en la Review 2, y para que el equipo lo use como base
+del diseño, la implementación y las pruebas.
+
+\textbf{Alcance:} cubre el ciclo de atención del taller (citas,
+recepción, diagnóstico, cotización y autorización, refacciones, cobro y
+entrega) y el portal web del cliente, según el alcance de la sección
+3.3.
+
+\textbf{Audiencia:} los dueños y el gerente del taller (aprobación), el
+personal que usará el sistema (validación de sus flujos), el equipo de
+desarrollo y el docente evaluador.
+
+\textbf{Convenciones:} cada requisito tiene un identificador único: RF
+(funcional), RNF (no funcional), RN (regla de negocio), HU (historia de
+usuario) y CU (caso de uso). Estos identificadores se usan en la matriz
+de trazabilidad (5.3).
+
+\subsection{4.2 Glosario del dominio}\label{glosario-del-dominio}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2349}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.5342}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2309}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Término}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Definición}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Sinónimos que usa el cliente}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Autorización & Aceptación de una cotización por el cliente; registra
+fecha, hora, IP, monto y el código de verificación. & Aprobación, firma
+digital \\
+Bahía & Espacio de trabajo donde se repara un vehículo. El taller tiene
+4 y cada una aloja un vehículo a la vez. & --- \\
+Checklist de inspección & Lista de verificación del estado de
+carrocería, interiores y accesorios al recibir el vehículo. & Lista de
+inspección \\
+Cita & Solicitud para atender un vehículo en una fecha y hora; queda
+«Pendiente» hasta que la recepcionista la confirma. & --- \\
+Código 2FA & Código de 6 dígitos, de un solo uso y vigente 5 minutos,
+que se envía al correo del cliente para confirmar una autorización. &
+Código de verificación, doble verificación \\
+Compra & Adquisición de refacciones a un proveedor, respaldada por un
+ticket. & Ticket de compra \\
+Concepto & Renglón de una cotización: mano de obra, refacción o insumo.
+Puede ser opcional. & Rubro \\
+Cotización & Costo desglosado de mano de obra, refacciones e insumos de
+una orden; vigente 5 días naturales. & Presupuesto \\
+Diagnóstico & Descripción técnica de la falla y de las reparaciones
+necesarias que registra el jefe de mecánicos. & --- \\
+Enlace seguro & Liga web única que recibe el cliente para consultar su
+vehículo y autorizar cotizaciones sin usuario ni contraseña. & Token de
+acceso \\
+Entrega a crédito & Entrega del vehículo con saldo pendiente; solo para
+flotillas registradas y con autorización del gerente. & Crédito \\
+Flotilla & Empresa cliente con varios vehículos que puede recibir
+entrega a crédito. & Flotilla empresarial \\
+Folio & Identificador único de una orden de servicio. & --- \\
+Fotografía de recepción & Evidencia digital del estado del vehículo al
+llegar. Son obligatorias cuatro: frente, trasera, costado izquierdo y
+costado derecho. & --- \\
+Garantía & Cobertura de 30 días sobre la mano de obra, contados desde la
+entrega del vehículo. & --- \\
+Insumo & Material consumible que se usa en la reparación, como aceite o
+líquidos. & Consumible \\
+Jefe de mecánicos & Líder técnico: diagnostica, cotiza, asigna bahías y
+mecánicos y solicita refacciones desde la tableta. & Líder técnico \\
+Mecánico responsable & Mecánico titular de una orden; otros mecánicos
+pueden colaborar sin cambiar la titularidad. & Mecánico principal \\
+Orden de servicio & Registro de todo el trabajo sobre un vehículo, desde
+la recepción hasta la entrega. & Orden \\
+Proveedor & Refaccionaria local a la que el almacén compra piezas. &
+Refaccionaria \\
+Recepción vehicular & Registro de la llegada del vehículo: kilometraje,
+nivel de combustible, checklist y fotografías. & Check-in, registro de
+entrada \\
+Re-cotización & Nueva versión de la cotización cuando los trabajos
+adicionales aumentan el monto más de 10 \%. & --- \\
+Refacción & Pieza que se instala en el vehículo. & Pieza, repuesto \\
+Saldo pendiente & Diferencia entre el total autorizado de la orden y lo
+que el cliente ha pagado. & --- \\
+Solicitud de refacción & Pedido de piezas que el jefe de mecánicos hace
+al almacén para una orden. & Requisición \\
+\end{longtable}
+}
+
+\subsection{4.3 Descripción general}\label{descripciuxf3n-general}
+
+\subsubsection{4.3.1 Usuarios y sus
+características}\label{usuarios-y-sus-caracteruxedsticas}
+
+El sistema será utilizado por distintos perfiles dentro de la estructura
+operativa del negocio y la parte gerencial del taller mecánico, además
+de los clientes finales del negocio. La siguiente tabla detalla las
+características, nivel técnico y contexto de uso:
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2138}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2990}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2138}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2734}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Tipo de usuario}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Tareas principales}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Experiencia tecnológica}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Dispositivo y contexto de uso}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Recepcionista & Registro de clientes/vehículos, check-in con fotos,
+apertura de órdenes, confirmación de citas web, cobranza y entrega. &
+Media: Manejo fluido de navegación web, correo electrónico y paquetes de
+oficina. & Computadora de escritorio en mostrador de recepción. Entorno
+de oficina con teclado/mouse. \\
+Jefe de Mecánicos (Líder Técnico) & Diagnóstico técnico, elaboración de
+cotizaciones, asignación de bahías/mecánicos, requisición de refacciones
+y sellado final. & Baja--Media: Familiarizado con smartphones
+personales; poca experiencia con sistemas de gestión. & Tabletas
+táctiles exclusivas de taller (1 o 2 dispositivos). Entorno con ruido,
+polvo y manipulación con manos sucias/grasosas. \\
+Mecánico en Bahía & Ejecución de reparaciones físicas, notificación de
+hallazgos adicionales o solicitud de refacciones al Jefe de Mecánicos. &
+Baja: Uso de teléfonos inteligentes para uso personal cotidiano. & Sin
+dispositivo asignado directo; interactúa a través del Jefe de Mecánicos
+para evitar deterioro de hardware \\
+Encargado de Almacén & Atender solicitudes de piezas, consultar
+directorio de proveedores locales, registrar compras/tickets e historial
+de insumos. & Baja--Media\textbf{:} Uso básico de computadora para
+consulta de inventarios. & Computadora de escritorio o terminal dedicada
+en el área de almacén/refacciones. \\
+Gerente (Dueño) & Monitoreo del Dashboard de KPIs (ocupación, ingresos),
+aprobación de entregas a crédito a flotillas y excepciones. & Media:
+Manejo de smartphones y computadoras para administración del negocio. &
+Laptop personal o dispositivo móvil (smartphone/tableta) con acceso
+remoto/local \\
+Cliente & Solicitud de citas en línea, seguimiento en vivo del servicio
+y aprobación/rechazo de cotizaciones mediante código 2FA. & Variable
+(Baja a Alta): Desde usuarios sin conocimientos técnicos hasta usuarios
+avanzados. & Dispositivo móvil personal (iOS/Android) vía navegador web
+progresivo (PWA) sin instalar aplicaciones. \\
+\end{longtable}
+}
+
+\subsubsection{4.3.2 Restricciones, supuestos y
+dependencias}\label{restricciones-supuestos-y-dependencias}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Restricciones:}
+\end{enumerate}
+
+\begin{itemize}
+\item
+  Presupuesto y Licenciamiento: El desarrollo debe realizarse
+  estrictamente con herramientas, lenguajes y frameworks de código
+  abierto (\emph{Open Source} como Python y FastAPI), garantizando cero
+  costos de licencias o rentas de software.
+\item
+  Infraestructura Física: El taller cuenta únicamente con 4 bahías de
+  trabajo físicas (capacidad estricta de 1 vehículo por bahía) y un
+  estacionamiento con capacidad máxima de 5 vehículos en espera.
+\item
+  Dispositivos Hardware: La captura digital en taller se limita a máximo
+  2 tabletas táctiles centralizadas por el Jefe de Mecánicos para
+  proteger la inversión y evitar daños.
+\end{itemize}
+
+\begin{itemize}
+\item
+  Alcance del Vehículo\textbf{:} La plataforma atenderá exclusivamente
+  vehículos ligeros (automóviles particulares, motocicletas y
+  camionetas), excluyendo maquinaria pesada o industrial.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\item
+  \textbf{Supuestos:}
+\end{enumerate}
+
+\begin{itemize}
+\item
+  Se asume que el taller mantiene activa una conexión de red local
+  (Wi-Fi) para la sincronización entre computadoras de mostrador y
+  tabletas de taller en condiciones normales.
+\item
+  Se asume que los clientes cuentan con un correo electrónico para
+  recibir el enlace de seguimiento y los códigos de verificación de 6
+  dígitos (2FA); el número celular se usa para el envío opcional del
+  enlace por SMS (RF-02.3).
+\item
+  Se asume que los datos ingresados durante la fase de desarrollo y
+  pruebas son 100\% ficticios para dar cumplimiento a la Ley Federal de
+  Protección de Datos Personales.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\item
+  \textbf{Dependencias:}
+\end{enumerate}
+
+\begin{itemize}
+\item
+  Infraestructura Eléctrica y Red: Operación dependiente de baterías en
+  laptops/tabletas y arquitectura \emph{Local-First / PWA} (Service
+  Workers e IndexedDB) para permitir la captura de datos \emph{offline}
+  durante cortes de luz o fallas de internet.
+\item
+  Proveedores Externos de Comunicación: Dependencia del servicio de
+  correo electrónico para entregar enlaces y códigos 2FA al cliente, y
+  de un servicio de SMS para el envío opcional del enlace.
+\item
+  Disponibilidad de Refaccionarias Locales: La adquisición de piezas
+  fuera de stock depende del directorio de proveedores locales e
+  historial de compras del almacén.
+\end{itemize}
+
+\subsection{4.4 Requisitos funcionales}\label{requisitos-funcionales}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.0962}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.4444}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1174}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1497}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1923}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Requisito funcional}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Módulo}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Prioridad (MoSCoW)}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Historias relacionadas}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+RF-01 & El sistema deberá permitir autenticar mediante credenciales
+seguras al personal del taller según su rol (Gerente, Recepcionista,
+Jefe de Mecánicos y Encargado de Almacén). & M1 -- Autenticación y
+Seguridad & Must & HU-27 \\
+RF-02.1 & El sistema deberá permitir al cliente consultar el estado de
+su vehículo y autorizar cotizaciones mediante un enlace web seguro
+enviado por correo electrónico o por SMS (RF-02.3), sin instalar
+aplicaciones. & M1 -- Autenticación y Seguridad & Must & HU-02, HU-28 \\
+RF-02.2 & El sistema deberá de expirar el enlace del cliente de manera
+automática una vez que el vehículo sea entregado y saldado. & M1 --
+Autenticación y Seguridad & Should & HU-02, HU-23 \\
+RF-02.3 & El sistema deberá de permitir enviar el enlace del cliente
+también por SMS. & M1 -- Autenticación y Seguridad & Could & HU-02 \\
+RF-03.1 & El sistema deberá registrar, buscar y actualizar la
+información de clientes y vehículos (placas, marca, modelo, año y VIN
+(opcional)). & M3 -- Recepción E Historial Inicial & Must & HU-05,
+HU-06 \\
+RF-03.2 & El sistema deberá mantener el historial de servicios de cada
+vehículo, con fotografías de recepción, diagnósticos técnicos y
+garantías aplicables (30 días en mano de obra). & M7 -- Portal del
+Cliente, Cobro y Gerencia & Should & HU-23, HU-24 \\
+RF-04 & El sistema deberá registrar en la recepción el kilometraje, el
+nivel de combustible y un checklist de carrocería, y exigir fotografías
+digitales del estado inicial de la unidad. & M3 -- Recepción E Historial
+Inicial & Must & HU-01, HU-25, HU-26 \\
+RF-05 & El sistema deberá permitir abrir órdenes de servicio asociadas a
+una de las 4 bahías y a un mecánico responsable, controlando los estados
+operativos del taller. & M5 -- Taller, Bahías y Expediente Técnico &
+Must & HU-07, HU-08, HU-09, HU-11 \\
+RF-06 & El sistema deberá generar cotizaciones desglosadas (mano de obra
+y refacciones/insumos) con vigencia de 5 días naturales y requerir firma
+digital validada con un código enviado al correo del cliente, de forma
+remota o presencial. & M4 Cotización y Contratos 2FA & Must & HU-02,
+HU-12, HU-13, HU-14, HU-15 \\
+RF-07 & El sistema deberá bloquear el avance del trabajo y exigir una
+nueva autorización con verificación cuando los trabajos adicionales
+incrementen el monto inicial en más de 10 \%. & M4 Cotización y
+Contratos 2FA & Must & HU-16 \\
+RF-08.1 & El sistema deberá permitir al jefe de mecánicos solicitar al
+almacén las piezas que requieran los mecánicos, vinculadas a una orden
+de servicio. & M6 -- Almacén y Refacciones & Should & HU-10, HU-19 \\
+RF-08.2 & El sistema deberá permitir al encargado de almacén mantener un
+directorio de proveedores locales (teléfonos o correos) y registrar
+costos y fechas de llegada de las piezas. & M6 -- Almacén y Refacciones
+& Should & HU-17, HU-18 \\
+RF-08.3 & El sistema deberá de emitir un ticket e historial de compras
+asociado a cada orden de servicio. & M6 -- Almacén y Refacciones & Could
+& HU-18 \\
+RF-09 & El sistema deberá ofrecer una agenda digital por día y bahía,
+donde las citas solicitadas en línea quedan ``Pendientes'' hasta que la
+recepcionista verifique disponibilidad y las confirme manualmente & M2
+-- Citas y Solicitudes & Should & HU-03, HU-04, HU-06 \\
+RF-10 & El sistema deberá impedir la entrega física del vehículo con
+saldo pendiente, a menos que el gerente autorice la entrega a crédito
+para vehículos de flotillas empresariales previamente registradas. & M7
+-- Portal del Cliente, Cobro y Gerencia & Must & HU-21, HU-22, HU-23 \\
+RF-11 & El sistema deberá ofrecer al gerente un panel con las órdenes
+abiertas y su estado, la ocupación de las 4 bahías, los tiempos de
+estancia y los ingresos acumulados. & M7 -- Portal del Cliente, Cobro y
+Gerencia & Should & HU-29 \\
+\end{longtable}
+}
