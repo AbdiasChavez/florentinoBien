@@ -233,3 +233,78 @@ los avances y pidiendo aclaraciones de dudas. \\
 
 \figura{figuras/mapa-poder-interes.png}{width=0.8\linewidth}{3.1}{Mapa de poder/interés de los
 stakeholders de la tabla anterior. Elaboración propia}{docs/03-vision/mapa-poder-interes.py}
+
+\subsection{3.5 Proceso actual (as-is)}\label{proceso-actual-as-is}
+
+\figura{figuras/proceso-as-is.png}{height=0.8\textheight}{3.2}{Diagrama de actividades del proceso actual (as-is) de
+atención del taller, con los problemas identificados en cada etapa.
+Elaboración propia}{docs/03-vision/proceso-as-is.puml}
+
+El diagrama de actividades muestra el proceso actual de atención del
+taller antes de implementar la solución tecnológica. Se organiza en
+cuatro carriles (cliente, recepcionista, mecánico y registro manual) y
+recorre el flujo completo: solicitud de cita, recepción del vehículo,
+diagnóstico, cotización, autorización, reparación, entrega y archivo del
+historial. Los recuadros rojos señalan los problemas detectados en cada
+etapa, como el riesgo de errores en el registro de citas, los datos
+incompletos en las órdenes en papel, la información dispersa e ilegible,
+las demoras en la cotización manual, el exceso de llamadas y un
+historial difícil de consultar.
+
+\subsection{3.6 Estudio de viabilidad}\label{estudio-de-viabilidad}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1708}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.5513}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2779}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Tipo}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Análisis y evidencia}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Conclusión (viable / viable con condiciones / no viable)}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Técnica & La pila propuesta (Python con FastAPI, PostgreSQL y una PWA
+con Service Workers e IndexedDB) es de código abierto y está bien
+documentada. El mayor riesgo técnico es la operación sin conexión con
+sincronización posterior (RNF-08, RNF-09, R-02), que se validará con un
+prototipo en el Sprint 1. & Viable con condiciones: validar la
+sincronización sin conexión en el Sprint 1. \\
+Económica & Costo de licencias de \$0: todas las herramientas son de
+código abierto o de planes educativos (RNF-07). El taller usa las
+computadoras que ya tiene en recepción y almacén, y 1 o 2 tabletas para
+el jefe de mecánicos. Los planes gratuitos de correo y almacenamiento
+tienen límites (R-05, R-06). & Viable con condiciones: el taller aporta
+las tabletas y el sistema respeta los límites de los planes
+gratuitos. \\
+Operativa & El personal tiene experiencia tecnológica baja a media
+(4.3.1). Se atiende con flujos de pocos pasos y botones grandes (RNF-02,
+RNF-03), capacitación breve y pruebas de usabilidad con el personal. Los
+dueños y el gerente apoyan el proyecto porque reduce disputas y llamadas
+(3.4). & Viable con condiciones: capacitar y probar con el personal
+antes de la Demo final. \\
+Legal & Se tratan datos de identificación y contacto de los clientes
+(nombre, teléfono y correo) y datos de sus vehículos, incluidas
+fotografías; no se tratan datos sensibles. Las finalidades y medidas de
+seguridad (control de acceso por rol, HTTPS, tokens temporales y aviso
+de privacidad) se detallan en 4.8 (Review 2), conforme a la Ley Federal de Protección de
+Datos Personales en Posesión de los Particulares (DOF 20-03-2025). En
+desarrollo y pruebas solo se usan datos ficticios (RNF-05). & Viable \\
+De calendario & El semestre tiene 7 sprints (S0 a S6) hasta la Demo
+final de la semana 16. El backlog tiene 30 historias; el release v0.1.0
+incluye el flujo núcleo y las historias Should o Could pueden pasar a la
+Fase 2 si la velocidad del equipo no alcanza. & Viable con condiciones:
+priorizar las historias Must. \\
+\end{longtable}
+}
+
+\textbf{Conclusión general:} el proyecto es viable con condiciones:
+validar en el Sprint 1 la operación sin conexión, que el taller aporte
+las tabletas, respetar los límites de los planes gratuitos y priorizar
+las historias Must del flujo núcleo.
